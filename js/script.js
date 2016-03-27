@@ -4,6 +4,10 @@ angular.module('TeamCompiler', ['ui.router'])
 .config(function($stateProvider){
 	//creates a controller for each partial
 	$stateProvider
+		.state('home', {
+			url: '/',
+			templateUrl: 'partials/home.html'
+		})
 		.state('champions', {
 			url: '/champions',
 			templateUrl: 'partials/champions.html'
@@ -15,11 +19,11 @@ angular.module('TeamCompiler', ['ui.router'])
 		.state('profile', {
 			//questionable on how we implement user IDs
 			url: '/profile',
-			templateUrl: 'partials/profile.html'
+			templateUrl: 'partials/profile.html',
 			controller: 'profileCtrl'
 		})
-		.state('team', {
-			url: '/teamcomps',
+		.state('teams', {
+			url: '/teams',
 			templateUrl: 'partials/team.html'
 		})
 })

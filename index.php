@@ -23,17 +23,20 @@
 		<div id="menu">
 			<div id="embossed">
 				<ul id="menuitems">
-					<li><a>Home</a></li>
-					<li><a>Champions</a></li>
-					<li><a>Profile</a></li>
-					<li><a>Teams</a></li>
-					<li><a>Account</a></li>
+					<li><a ui-sref="home">Home</a></li>
+					<li><a ui-sref="champions">Champions</a></li>
+					<li><a ui-sref="profile">Profile</a></li>
+					<li><a ui-sref="teams">Teams</a></li>
+					<li><a ui-sref="dynamic">Comp</a></li>
 				</ul>
 			</div>
 		</div>
 		<div id="spacer"></div>
 	</div>
-	<div id="mainpage"></div>
+		
+	<div id="mainpage">
+		<div ui-view></div>
+	</div>
 
 	<script src="js/script.js"/>
 </body>
