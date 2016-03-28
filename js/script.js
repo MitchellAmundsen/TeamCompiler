@@ -6,7 +6,8 @@ angular.module('TeamCompiler', ['ui.router'])
 	$stateProvider
 		.state('home', {
 			url: '/',
-			templateUrl: 'partials/home.html'
+			templateUrl: 'partials/home.html',
+			controller: 'homeCtrl'
 		})
 		.state('champions', {
 			url: '/champions',
@@ -34,12 +35,18 @@ angular.module('TeamCompiler', ['ui.router'])
 
 }])
 
+.controller('homeCtrl', ['$scope', '$http', function($scope, $http){
+	var mainPage = document.getElementById("mainpage");
+	mainPage.innerHTML = "";
+}])
+
 .controller('championCtrl', ['$scope', '$http', function($scope, $http){
 	createSearch();
 	getChamps();
 
 function createSearch(){
 	var mainPage = document.getElementById("mainpage");
+	mainPage.innerHTML = "";
 	var div = document.createElement("div");
 	var input = document.createElement("input");
 	var datalist = document.createElement("datalist");
