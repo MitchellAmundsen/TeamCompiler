@@ -46,11 +46,12 @@ body{
 	background-color: lightgray;
 	width: 80%;
 	border-radius: 10px;
-	height: 600px;
+	min-height: 1000px;
 	margin-right: auto;
 	margin-left: auto;
-	margin-top: 30px;
+	margin-top: 60px;
 	margin-bottom: 20px;
+	overflow: hidden;
 }
 #menuitems > li > a{
 	vertical-align: middle;
@@ -64,6 +65,7 @@ body{
 #logo{
 	height: 60px;
 	width: 100%;
+	overflow: hidden;
 }
 #spacer{
 	height: 10px;
@@ -86,4 +88,40 @@ body{
 #search{
 	float: right;
 	margin-right: 10%;
+	padding-top: 1.4em;
+}
+input{
+	border-radius: 10px;
+	border: none;
+}
+#championsearch{
+	float: right;
+	margin-top: 10px;
+	margin-right: 10px;
+}
+input::-webkit-calendar-picker-indicator {
+  display: none;
+}
+.champpic{
+	width: 80px;
+	height: 80px;
+}
+.champ{
+	float: left;
+	text-align: center;
+	margin-left: 5px;
+	margin-right: 5px;
+	padding-bottom: 10px;
+}
+.champname{
+	width: 100%;
+	margin: 0px;
+	font-size: 10pt;
+}
+#allchamps{
+	clear: right;
+	margin-top: 80px;
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
 }

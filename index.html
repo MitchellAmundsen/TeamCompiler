@@ -6,7 +6,7 @@
 	<link rel="icon" type="image/png" href="images/favicon.png">
 
 	<!-- load jquery -->
-	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<!--<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>-->
 	<!-- load angular -->
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.js"></script>
 
