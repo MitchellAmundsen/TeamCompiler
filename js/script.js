@@ -41,85 +41,108 @@ angular.module('TeamCompiler', ['ui.router'])
 }])
 
 .controller('championCtrl', ['$scope', '$http', function($scope, $http){
+	//create search bar
 	createSearch();
+
+	//load champions
 	getChamps();
 
-function createSearch(){
-	var mainPage = document.getElementById("contents");
-	mainPage.innerHTML = "";
-	var div = document.createElement("div");
-	var input = document.createElement("input");
-	var datalist = document.createElement("datalist");
-	div.id = "championsearch";
-	datalist.id="championlist";
-	input.placeholder = "search champion...";
-	input.type = "search";
-	input.setAttribute("list", "championlist");
-	input.oninput = filterChamps;
-	div.appendChild(input);
-	div.appendChild(datalist);
-	mainPage.appendChild(div);
-}
+	//Adds elements for search bar into main page
+	//Runs filterChamps function when something is typed in search bar
+	function createSearch(){
+		var mainPage = document.getElementById("contents");
+		mainPage.innerHTML = "";
+		var div = document.createElement("div");
+		var input = document.createElement("input");
+		var datalist = document.createElement("datalist");
+		div.id = "championsearch";
+		datalist.id="championlist";
+		input.placeholder = "search champion...";
+		input.type = "search";
+		input.setAttribute("list", "championlist");
+		input.oninput = filterChamps;
+		div.appendChild(input);
+		div.appendChild(datalist);
+		mainpage.appendChild(div);
+	}
 
-function getChamps(){
-	var ajax = new XMLHttpRequest();
-	ajax.onload = fillSearch;
-	ajax.open("GET", "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=9de4b039-b7a1-431a-9969-714f68532ed3", true);
-	ajax.send();
-}
+	//Gets all basic champion json data from league static API
+	//Runs fillSearch function when request is loaded
+	function getChamps(){
+		var ajax = new XMLHttpRequest();
+		ajax.onload = showChamps;		//lets showChamps function do stuff with the data only once it has loaded
+		ajax.open("GET", 
+				  "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=9de4b039-b7a1-431a-9969-714f68532ed3",
+				   true);
+		ajax.send();
+	}
 
-function fillSearch(){
-	if(this.status == 200){
-		var data = JSON.parse(this.responseText);
-		var champs = data.data;
-		var datalist = document.getElementById("championlist");
-		for(var champ in champs){
-			var option = document.createElement("option");
-			option.innerHTML = champ;
-			datalist.appendChild(option);
+	//loads picture and name for each champion to mainpage
+	function showChamps(){
+		if(this.status == 200){
+			var data = JSON.parse(this.responseText);
+			var champs = data.data;
+			var mainPage = document.getElementById("contents");
+			var allChamps = document.createElement("div");
+			allChamps.overflow = "hidden";
+			allChamps.id = "allchamps";
+
+			//champ represents json object for a single champion
+			//makes a div containing relevant info for each champion
+			for(var champ in champs){
+				var champDiv = document.createElement("div");
+				var image = document.createElement("img");
+				var name = document.createElement("p");
+				image.onerror = defaultImage;
+				image.onmouseover = champHover;
+				image.onmouseout = champOut;													//if image src has an error run defaultImage function
+				image.src = "http://ddragon.leagueoflegends.com/cdn/6.5.1/img/champion/" + 
+				             champ + ".png";													//uses league API for each champion image
+				image.className = "champpic";
+				name.className = "champname";
+				name.innerHTML = data.data[champ].name;
+				champDiv.className = "champ";
+				champDiv.id = champ;
+				champDiv.appendChild(image);
+				champDiv.appendChild(name);
+				allChamps.appendChild(champDiv);
+			}
+			mainPage.appendChild(allChamps);
 		}
 	}
-	showChamps(data, champs);
-}
 
-function showChamps(data, champs){
-	var mainPage = document.getElementById("contents");
-	var allChamps = document.createElement("div");
-	allChamps.overflow = "hidden";
-	allChamps.id = "allchamps";
-	for(var champ in champs){
-		var champDiv = document.createElement("div");
-		var image = document.createElement("img");
-		var name = document.createElement("p");
-		image.onerror = defaultImage;
-		image.src = "http://ddragon.leagueoflegends.com/cdn/6.5.1/img/champion/" + champ + ".png";
-		image.className = "champpic";
-		name.className = "champname";
-		name.innerHTML = data.data[champ].name;
-		champDiv.className = "champ";
-		champDiv.id = champ;
-		champDiv.appendChild(image);
-		champDiv.appendChild(name);
-		allChamps.appendChild(champDiv);
-	}
-	mainPage.appendChild(allChamps);
-}
-
-function filterChamps(){
-	var options = document.querySelectorAll(".champ");
-	for(var i = 0; i < options.length; i++){
-		var searchName = this.value.replace(/\s+/g, "").toLowerCase();
-		var champName = options[i].id.toLowerCase();
-		if(champName.indexOf(searchName) > -1){
-			console.log(champName);
-			options[i].style.display = "";
-		}else{
-			options[i].style.display = "none";
+	//Makes champions searchable
+	//Only displays champions that match the search string
+	//All other champs are hidden until search is cleared
+	function filterChamps(){
+		var options = document.querySelectorAll(".champ");
+		for(var i = 0; i < options.length; i++){
+			var searchName = this.value.replace(/\s+/g, "").toLowerCase();	//Removes spaces from search and makes search lowercase
+			var champName = options[i].id.toLowerCase();					//Makes names from champions lowercase
+			if(champName.indexOf(searchName) > -1){							//Check if champ name contains search name
+				options[i].style.display = "";
+			}else{
+				options[i].style.display = "none";
+			}
 		}
 	}
-}
 
-function defaultImage(){
-	this.src = "";
-}
+	//Runs if there is an error getting a champion immage from league API
+	//Makes the image source empty (will later replace with default image)
+	function defaultImage(){
+		this.src = "";
+	}
+
+	function champHover(){
+		this.style.border = "2px black solid";
+		this.style.height = "76px";
+		this.style.width = "76px";
+		this.style.cursor = "pointer";
+	}
+
+	function champOut(){
+		this.style.border = "none";
+		this.style.height = "80px";
+		this.style.width = "80px";
+	}
 }])
