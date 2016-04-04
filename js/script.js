@@ -32,7 +32,8 @@ angular.module('TeamCompiler', ['ui.router'])
 
 //controllers acts as different scrips for each state (i believe)
 .controller('profileCtrl', ['$scope', '$http', function($scope, $http){
-
+	var mainPage = document.getElementById("contents");
+	mainPage.innerHTML = "";
 }])
 
 .controller('homeCtrl', ['$scope', '$http', function($scope, $http){
@@ -63,7 +64,7 @@ angular.module('TeamCompiler', ['ui.router'])
 		input.oninput = filterChamps;
 		div.appendChild(input);
 		div.appendChild(datalist);
-		mainpage.appendChild(div);
+		mainPage.appendChild(div);
 	}
 
 	//Gets all basic champion json data from league static API
