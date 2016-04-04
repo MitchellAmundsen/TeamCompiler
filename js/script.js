@@ -36,7 +36,7 @@ angular.module('TeamCompiler', ['ui.router'])
 }])
 
 .controller('homeCtrl', ['$scope', '$http', function($scope, $http){
-	var mainPage = document.getElementById("mainpage");
+	var mainPage = document.getElementById("contents");
 	mainPage.innerHTML = "";
 }])
 
@@ -45,7 +45,7 @@ angular.module('TeamCompiler', ['ui.router'])
 	getChamps();
 
 function createSearch(){
-	var mainPage = document.getElementById("mainpage");
+	var mainPage = document.getElementById("contents");
 	mainPage.innerHTML = "";
 	var div = document.createElement("div");
 	var input = document.createElement("input");
@@ -58,7 +58,7 @@ function createSearch(){
 	input.oninput = filterChamps;
 	div.appendChild(input);
 	div.appendChild(datalist);
-	mainpage.appendChild(div);
+	mainPage.appendChild(div);
 }
 
 function getChamps(){
@@ -83,7 +83,7 @@ function fillSearch(){
 }
 
 function showChamps(data, champs){
-	var mainPage = document.getElementById("mainpage");
+	var mainPage = document.getElementById("contents");
 	var allChamps = document.createElement("div");
 	allChamps.overflow = "hidden";
 	allChamps.id = "allchamps";
